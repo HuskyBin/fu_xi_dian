@@ -1,3 +1,4 @@
+494. Target Sum
 楼上的答案很妙，是转成subset sum problem作的。
 set = {a,b,c,d} 如果 a+b -c-d = S,那么split positive and negative 就有a+b = S + c + d,
 就有 a+b+c+d = S + 2(c + d), if total = a+b+c+d, then c+d = (total - S)/2 where total - S should be even, then we just need to find the number of subsets with target sum = (total - S) / 2.
