@@ -1,0 +1,47 @@
+楼上的答案很妙，是转成subset sum problem作的。
+set = {a,b,c,d} 如果 a+b -c-d = S,那么split positive and negative 就有a+b = S + c + d,
+就有 a+b+c+d = S + 2(c + d), if total = a+b+c+d, then c+d = (total - S)/2 where total - S should be even, then we just need to find the number of subsets with target sum = (total - S) / 2.
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int S) {
+        int total = 0;
+        for (auto x : nums) total += x;
+        if (total < S || (total - S) % 2 || (total - S)/2 > 1000) return 0;
+        return subsetSum(nums, (total - S) / 2);
+    }
+private:
+    int subsetSum(vector<int> &nums, int target) {
+        vector<int> f(target + 1, 0);
+        sort(nums.begin(), nums.end());
+        f[0] = 1;
+        for (int j = 0; j < nums.size(); j++) {
+            for (int i = target; i >= 0; i--) {
+                if (i - nums[j] >= 0) f[i] += f[i - nums[j]];
+                else break;
+            }
+        }
+        return f[target];
+    }
+};
